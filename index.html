@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Familia Conecta App</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- Home Screen -->
+  <section id="home" class="screen active">
+    <header>
+      <h1>Familia Conecta</h1>
+      <p>Tu red de apoyo integral</p>
+    </header>
+    <div class="cards">
+      <div class="card training-card" onclick="navigate('training')">
+        <span class="emoji">📚</span>
+        <h2>Capacitación</h2>
+      </div>
+      <div class="card support-card" onclick="navigate('support')">
+        <span class="emoji">🧘</span>
+        <h2>Apoyo</h2>
+      </div>
+      <div class="card community-card" onclick="navigate('community')">
+        <span class="emoji">💬</span>
+        <h2>Comunidad</h2>
+      </div>
+      <div class="card plan-card" onclick="navigate('plan')">
+        <span class="emoji">📝</span>
+        <h2>Plan</h2>
+      </div>
+      <div class="card resources-card" onclick="navigate('resources')">
+        <span class="emoji">📦</span>
+        <h2>Recursos</h2>
+      </div>
+      <!-- Settings card for accessibility options -->
+      <div class="card" onclick="navigate('settings')">
+        <span class="emoji">⚙️</span>
+        <h2>Configuración</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Settings Screen -->
+  <section id="settings" class="screen">
+    <header>
+      <button class="back" onclick="navigate('home')">← Inicio</button>
+      <h1>Configuración</h1>
+    </header>
+    <div class="settings-content" style="padding: 16px;">
+      <div class="setting-item" style="margin-bottom: 16px;">
+        <label style="font-size: 16px; color: #2A6FAF;">
+          <input type="checkbox" id="highContrastToggle" onchange="toggleHighContrast()">
+          Modo alto contraste
+        </label>
+      </div>
+      <div class="setting-item" style="margin-bottom: 16px;">
+        <label style="font-size: 16px; color: #2A6FAF; display: block; margin-bottom: 4px;">Tamaño de letra:</label>
+        <button onclick="decreaseFont()" style="padding: 6px 12px; margin-right: 8px; border: none; border-radius: 4px; background: #2A6FAF; color: #fff;">-</button>
+        <span id="fontSizeDisplay" style="font-size: 16px;">16</span>
+        <button onclick="increaseFont()" style="padding: 6px 12px; margin-left: 8px; border: none; border-radius: 4px; background: #2A6FAF; color: #fff;">+</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Screen -->
+  <section id="training" class="screen">
+    <header>
+      <button class="back" onclick="navigate('home')">← Inicio</button>
+      <h1>Capacitación 24/7</h1>
+    </header>
+    <div class="list">
+      <!-- Training items inserted via JS -->
+    </div>
+  </section>
+
+  <!-- Support Screen -->
+  <section id="support" class="screen">
+    <header>
+      <button class="back" onclick="navigate('home')">← Inicio</button>
+      <h1>Apoyo Emocional</h1>
+    </header>
+    <div class="support-content">
+      <div class="support-section">
+        <h2>Ejercicio de respiración</h2>
+        <p>Inhala por 4 segundos, retén 4 segundos, exhala 4 segundos. Repite 4 veces.</p>
+        <button onclick="alert('Respira profundamente… ¡Bien hecho!')">Comenzar</button>
+      </div>
+      <div class="support-section">
+        <h2>Consejos de bienestar</h2>
+        <ul id="wellnessTips"></ul>
+      </div>
+      <div class="support-section">
+        <h2>Contactar profesional</h2>
+        <p>Un psicólogo responderá tus mensajes.</p>
+        <div class="chat">
+          <div id="chatMessages" class="chat-messages"></div>
+          <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter'){sendMessage();}">
+          <button onclick="sendMessage()">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Screen -->
+  <section id="community" class="screen">
+    <header>
+      <button class="back" onclick="navigate('home')">← Inicio</button>
+      <h1>Comunidad</h1>
+    </header>
+    <div id="posts" class="posts"></div>
+    <div class="new-post">
+      <textarea id="newPostText" placeholder="Comparte tu experiencia..."></textarea>
+      <button onclick="publishPost()">Publicar</button>
+    </div>
+  </section>
+
+  <!-- Plan Screen -->
+  <section id="plan" class="screen">
+    <header>
+      <button class="back" onclick="navigate('home')">← Inicio</button>
+      <h1>Plan Personalizado</h1>
+    </header>
+    <div class="plan-form">
+      <label for="disabilityType">Tipo de discapacidad:</label>
+      <select id="disabilityType">
+        <option value="fisica">Física</option>
+        <option value="intelectual">Intelectual</option>
+        <option value="auditiva">Auditiva</option>
+        <option value="visual">Visual</option>
+        <option value="psicosocial">Psicosocial</option>
+        <option value="lenguaje">Lenguaje</option>
+      </select>
+      <label for="ageGroup">Edad:</label>
+      <select id="ageGroup">
+        <option value="0-5">0-5 años</option>
+        <option value="6-12">6-12 años</option>
+        <option value="13-18">13-18 años</option>
+        <option value="adulto">Adulto</option>
+        <option value="mayor">Mayor</option>
+      </select>
+      <label for="caregivers">Número de cuidadores:</label>
+      <input type="number" id="caregivers" min="1" max="10" value="1">
+      <button onclick="generatePlan()">Generar Plan</button>
+    </div>
+    <div id="planResult" class="plan-result"></div>
+  </section>
+
+  <!-- Resources Screen -->
+  <section id="resources" class="screen">
+    <header>
+      <button class="back" onclick="navigate('home')">← Inicio</button>
+      <h1>Recursos</h1>
+    </header>
+    <div class="resource-categories">
+      <button onclick="showCategory('guides')">Guías</button>
+      <button onclick="showCategory('therapies')">Terapias</button>
+      <button onclick="showCategory('videos')">Videos</button>
+      <button onclick="showCategory('institutions')">Instituciones</button>
+      <button onclick="showCategory('respite')">Respiro</button>
+      <button onclick="showCategory('programs')">Programas</button>
+    </div>
+    <div id="resourceList" class="resource-list"></div>
+  </section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
